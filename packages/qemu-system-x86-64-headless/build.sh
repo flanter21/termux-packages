@@ -72,7 +72,7 @@ termux_step_configure() {
 	CFLAGS+=" $CPPFLAGS"
 	CXXFLAGS+=" $CPPFLAGS"
 	LDFLAGS+=" -landroid-shmem -llog"
-
+	sed -i 's/\/etc/\@TERMUX_PREFIX\@\/etc/' hw/hppa/machine.c
 	# Note: using --disable-stack-protector since stack protector
 	# flags already passed by build scripts but we do not want to
 	# override them with what QEMU configure provides.
