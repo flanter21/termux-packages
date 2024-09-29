@@ -76,6 +76,7 @@ termux_step_configure() {
 	sed -i 's/SHMLBA/getpagesize()/' linux-user/elfload.c
 	sed -i 's/__u64/uint64_t/' accel/stubs/gunyah-stub.c
 	sed -i 's/__u64/uint64_t/' accel/stubs/gunyah-stub.c
+	sed -i 's/h_shmlba = (HOST_FORCE_SHMLBA ? SHMLBA : h_pagesize);/h_shmlba = (HOST_FORCE_SHMLBA ? getpagesize() : h_pagesize);/' linux-user/mmap.c
 	# Note: using --disable-stack-protector since stack protector
 	# flags already passed by build scripts but we do not want to
 	# override them with what QEMU configure provides.
