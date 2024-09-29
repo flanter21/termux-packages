@@ -59,8 +59,6 @@ termux_step_configure() {
 	QEMU_TARGETS+="x86_64-softmmu,"
 
 	# User mode emulation.
-	QEMU_TARGETS+="aarch64-linux-user,"
-	QEMU_TARGETS+="arm-linux-user,"
 	QEMU_TARGETS+="i386-linux-user,"
 	QEMU_TARGETS+="m68k-linux-user,"
 	QEMU_TARGETS+="ppc64-linux-user,"
