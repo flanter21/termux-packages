@@ -1,15 +1,3 @@
-diff -uNr qemu-8.2.5/accel/tcg/perf.c qemu-8.2.5.mod/accel/tcg/perf.c
---- qemu-8.2.5/accel/tcg/perf.c	2024-06-10 20:19:05.000000000 +0300
-+++ qemu-8.2.5.mod/accel/tcg/perf.c	2024-06-12 21:43:13.385221419 +0300
-@@ -50,7 +50,7 @@
- {
-     char map_file[32];
- 
--    snprintf(map_file, sizeof(map_file), "/tmp/perf-%d.map", getpid());
-+    snprintf(map_file, sizeof(map_file), "@TERMUX_PREFIX@/tmp/perf-%d.map", getpid());
-     perfmap = safe_fopen_w(map_file);
-     if (perfmap == NULL) {
-         warn_report("Could not open %s: %s, proceeding without perfmap",
 diff -uNr qemu-8.2.5/block/gluster.c qemu-8.2.5.mod/block/gluster.c
 --- qemu-8.2.5/block/gluster.c	2024-06-10 20:19:05.000000000 +0300
 +++ qemu-8.2.5.mod/block/gluster.c	2024-06-12 21:43:13.385221419 +0300
