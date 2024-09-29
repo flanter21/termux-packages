@@ -73,6 +73,7 @@ termux_step_configure() {
 	CXXFLAGS+=" $CPPFLAGS"
 	LDFLAGS+=" -landroid-shmem -llog"
 	sed -i 's/\/etc/\@TERMUX_PREFIX\@\/etc/' hw/hppa/machine.c
+ 	sed -i 's/SHMLBA/getpagesize()/' linux-user/elfload.c
 	# Note: using --disable-stack-protector since stack protector
 	# flags already passed by build scripts but we do not want to
 	# override them with what QEMU configure provides.
