@@ -36,18 +36,6 @@ diff -uNr qemu-8.2.5/contrib/ivshmem-server/main.c qemu-8.2.5.mod/contrib/ivshme
  #define IVSHMEM_SERVER_DEFAULT_SHM_PATH       "ivshmem"
  #define IVSHMEM_SERVER_DEFAULT_SHM_SIZE       (4 * 1024 * 1024)
  #define IVSHMEM_SERVER_DEFAULT_N_VECTORS      1
-diff -uNr qemu-8.2.5/contrib/rdmacm-mux/main.c qemu-8.2.5.mod/contrib/rdmacm-mux/main.c
---- qemu-8.2.5/contrib/rdmacm-mux/main.c	2024-06-10 20:19:05.000000000 +0300
-+++ qemu-8.2.5.mod/contrib/rdmacm-mux/main.c	2024-06-12 21:43:13.389221438 +0300
-@@ -41,7 +41,7 @@
- #define CM_SIDR_REQ_DGID_POS 44
- 
- /* The below can be override by command line parameter */
--#define UNIX_SOCKET_PATH "/var/run/rdmacm-mux"
-+#define UNIX_SOCKET_PATH "@TERMUX_PREFIX@/var/run/rdmacm-mux"
- /* Has format %s-%s-%d" <path>-<rdma-dev--name>-<port> */
- #define SOCKET_PATH_MAX (PATH_MAX - NAME_MAX - sizeof(int) - 2)
- #define RDMA_PORT_NUM 1
 diff -uNr qemu-8.2.5/hw/hppa/machine.c qemu-8.2.5.mod/hw/hppa/machine.c
 --- qemu-8.2.5/hw/hppa/machine.c	2024-06-10 20:19:05.000000000 +0300
 +++ qemu-8.2.5.mod/hw/hppa/machine.c	2024-06-12 21:43:54.585416673 +0300
