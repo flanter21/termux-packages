@@ -2,9 +2,10 @@ TERMUX_PKG_HOMEPAGE=https://www.mozilla.org/firefox
 TERMUX_PKG_DESCRIPTION="Mozilla Firefox web browser"
 TERMUX_PKG_LICENSE="MPL-2.0"
 TERMUX_PKG_MAINTAINER="@termux"
-TERMUX_PKG_VERSION="130.0.1"
+TERMUX_PKG_VERSION="133.0.3"
+TERMUX_PKG_REVISION=1
 TERMUX_PKG_SRCURL=https://archive.mozilla.org/pub/firefox/releases/${TERMUX_PKG_VERSION}/source/firefox-${TERMUX_PKG_VERSION}.source.tar.xz
-TERMUX_PKG_SHA256=027225a1e9b074f0072e22c7264cf27b0d2364c675c3ca811aa6c25fb01b9f70
+TERMUX_PKG_SHA256=f134a5420200bb03ab460f9d2867507c0edb222ce73faf4064cdbea02a0aca1b
 # ffmpeg and pulseaudio are dependencies through dlopen(3):
 TERMUX_PKG_DEPENDS="ffmpeg, fontconfig, freetype, gdk-pixbuf, glib, gtk3, libandroid-shmem, libandroid-spawn, libc++, libcairo, libevent, libffi, libice, libicu, libjpeg-turbo, libnspr, libnss, libpixman, libsm, libvpx, libwebp, libx11, libxcb, libxcomposite, libxdamage, libxext, libxfixes, libxrandr, libxtst, pango, pulseaudio, zlib"
 TERMUX_PKG_BUILD_DEPENDS="libcpufeatures, libice, libsm"
@@ -24,8 +25,8 @@ termux_pkg_auto_update() {
 	local uptime_s="${uptime_now//.*}"
 	local uptime_h_limit=2
 	local uptime_s_limit=$((uptime_h_limit*60*60))
-	[[ -z "${uptime_s}" ]] && e=1
-	[[ "${uptime_s}" == 0 ]] && e=1
+	[[ -z "${uptime_s}" ]] && [[ "$(uname -o)" != "Android" ]] && e=1
+	[[ "${uptime_s}" == 0 ]] && [[ "$(uname -o)" != "Android" ]] && e=1
 	[[ "${uptime_s}" -gt "${uptime_s_limit}" ]] && e=1
 
 	if [[ "${e}" != 0 ]]; then
@@ -74,9 +75,8 @@ termux_step_pre_configure() {
 	# Out of memory when building gkrust
 	# CI shows (signal: 9, SIGKILL: kill)
 	if [ "$TERMUX_DEBUG_BUILD" = false ]; then
-		case "${TERMUX_ARCH}" in
-		aarch64|arm|i686|x86_64) RUSTFLAGS+=" -C debuginfo=1" ;;
-		esac
+		local env_host=$(printf $CARGO_TARGET_NAME | tr a-z A-Z | sed s/-/_/g)
+		export CARGO_TARGET_${env_host}_RUSTFLAGS+=" -C debuginfo=1"
 	fi
 
 	cargo install cbindgen
